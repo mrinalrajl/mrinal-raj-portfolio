@@ -578,7 +578,7 @@ const Contact = ({ version }: { version: 'A' | 'B' }) => {
         <div className="flex flex-col md:flex-row justify-between items-end border-t border-slate-200 dark:border-slate-800 pt-12">
           <div className="max-w-sm">
             <h4 className="text-3xl font-black uppercase tracking-tighter mb-4">Let's build something experimental</h4>
-            <a className="text-primary font-bold text-xl underline underline-offset-8" href="mailto:lakkmrinal@gmail.com">lakkmrinal@gmail.com</a>
+            <a className="text-primary font-bold text-xl underline underline-offset-8" href="mailto:mrinaldesgin@gmail.com">mrinaldesgin@gmail.com</a>
           </div>
           <div className="mt-12 md:mt-0 flex flex-col items-end gap-2">
             <div className="flex gap-6">
@@ -891,7 +891,7 @@ const ProjectsPage = ({ version }: { version: 'A' | 'B' }) => {
                 </div>
               </div>
               <ChevronRight size={14} className={`transition-all ${
-                activeProject === index ? "opacity-100 text-slate-900 dark:text-white" : "opacity-0 group-hover:opacity-100 text-slate-400 dark:text-slate-600"
+                activeProject === index ? "opacity-100 text-slate-900 dark:text-white" : "opacity-0 group-hover:opacity-100 text-slate-400 dark:text-slate-200"
               }`} />
             </div>
           ))}
@@ -968,7 +968,7 @@ const ProjectsPage = ({ version }: { version: 'A' | 'B' }) => {
             className="absolute bottom-20 md:bottom-10 left-1/2 -translate-x-1/2 w-full max-w-lg glass-panel rounded-2xl p-6 text-center transform transition-all hover:scale-105 duration-300 border border-slate-200 dark:border-white/10"
           >
             <h2 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">{currentProject.title}</h2>
-            <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-sm">
+            <p className="text-slate-800 dark:text-slate-200 leading-relaxed text-sm">
               {currentProject.description}
             </p>
             <div className="mt-4 pt-4 border-t border-slate-200 dark:border-white/10 flex justify-center gap-6">
@@ -1059,7 +1059,7 @@ export default function App() {
 
           {version === 'B' && (
             <footer className="p-8 text-center text-sm font-medium border-t-4 border-black dark:border-white bg-white dark:bg-black relative z-10">
-              <p>© 2024 Mrinal Raj Lakkimsetty. Crafted with precision in the digital space.</p>
+              <p>© 2026 Mrinal Raj Lakkimsetty. Crafted with precision in the digital space.</p>
             </footer>
           )}
         </main>

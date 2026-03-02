@@ -42,4 +42,8 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+
+  .glass-panel {
+    @apply bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-xl;
+  }
 }
