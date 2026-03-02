@@ -564,28 +564,96 @@ const Contact = ({ version }: { version: 'A' | 'B' }) => {
   const [email, setEmail] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (email) {
-      console.log("Captured Email (Version B):", email);
-      setSubmitted(true);
+      try {
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, version }),
+        });
+        
+        if (response.ok) {
+          setSubmitted(true);
+        } else {
+          const errorData = await response.json();
+          console.error("Failed to send email via API:", errorData);
+          
+          let errorMessage = errorData.error || 'Unknown error';
+          if (errorData.message) {
+            errorMessage += `: ${errorData.message}`;
+          }
+          
+          alert(`Submission failed: ${errorMessage}\n\nHint: If you are on Resend's free tier, ensure the recipient email in server.ts matches your Resend signup email.`);
+        }
+      } catch (error) {
+        console.error("Error submitting form:", error);
+        alert("An unexpected error occurred. Please try again later.");
+      }
     }
   };
 
   if (version === 'A') {
     return (
-      <footer id="contact" className="px-12 md:px-24 py-20 bg-background-light dark:bg-background-dark">
-        <div className="flex flex-col md:flex-row justify-between items-end border-t border-slate-200 dark:border-slate-800 pt-12">
-          <div className="max-w-sm">
-            <h4 className="text-3xl font-black uppercase tracking-tighter mb-4">Let's build something experimental</h4>
-            <a className="text-primary font-bold text-xl underline underline-offset-8" href="mailto:mrinaldesgin@gmail.com">mrinaldesgin@gmail.com</a>
+      <footer id="contact" className="px-12 md:px-24 py-32 bg-background-light dark:bg-background-dark border-t border-slate-200 dark:border-slate-800">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div>
+              <h2 className="text-5xl font-black uppercase tracking-tighter mb-6">Let's build something <span className="text-primary italic">experimental</span></h2>
+              <p className="text-slate-600 dark:text-slate-400 text-lg mb-8 max-w-md">
+                I'm always open to discussing new projects, creative ideas or opportunities to be part of your visions.
+              </p>
+              <div className="flex flex-col gap-2">
+                <span className="text-xs font-bold text-slate-400 uppercase tracking-widest">Direct Line</span>
+                <a className="text-primary font-bold text-2xl underline underline-offset-8 hover:text-blue-700 transition-colors" href="mailto:lakkmrinal@gmail.com">lakkmrinal@gmail.com</a>
+              </div>
+            </div>
+
+            <div className="glass-panel p-8 rounded-2xl border border-slate-200 dark:border-white/10 shadow-xl">
+              {!submitted ? (
+                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                  <div className="flex flex-col gap-2">
+                    <label className="text-xs font-bold text-slate-500 uppercase tracking-widest">Your Email</label>
+                    <input 
+                      type="email" 
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="hello@example.com"
+                      required
+                      className="w-full px-6 py-4 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 focus:ring-2 focus:ring-primary outline-none transition-all text-slate-900 dark:text-white"
+                    />
+                  </div>
+                  <button 
+                    type="submit"
+                    className="w-full px-8 py-4 bg-primary text-white font-bold rounded-xl hover:bg-blue-700 transition-all flex items-center justify-center gap-2 shadow-lg shadow-primary/20"
+                  >
+                    Send Message <Send size={18} />
+                  </button>
+                </form>
+              ) : (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="text-center py-8"
+                >
+                  <div className="size-16 bg-primary/10 text-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Sparkles size={32} />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">Transmission Received!</h3>
+                  <p className="text-slate-600 dark:text-slate-400 mb-6">I'll get back to you at <span className="font-bold text-slate-900 dark:text-white">{email}</span> shortly.</p>
+                  <button onClick={() => setSubmitted(false)} className="text-sm font-bold text-primary underline">Send another?</button>
+                </motion.div>
+              )}
+            </div>
           </div>
-          <div className="mt-12 md:mt-0 flex flex-col items-end gap-2">
-            <div className="flex gap-6">
+
+          <div className="mt-32 pt-12 border-t border-slate-200 dark:border-slate-800 flex flex-col md:flex-row justify-between items-center gap-8">
+            <div className="flex gap-8">
               <a className="font-bold uppercase tracking-widest text-xs hover:text-primary transition-colors" href="https://www.linkedin.com/in/l-mrinal-raj" target="_blank" rel="noreferrer">LinkedIn</a>
               <a className="font-bold uppercase tracking-widest text-xs hover:text-primary transition-colors" href="https://github.com/mrinalrajl" target="_blank" rel="noreferrer">GitHub</a>
             </div>
-            <p className="text-slate-400 text-[10px] tracking-[0.3em] uppercase mt-4">© 2026 MRINAL RAJ ALL RIGHTS RESERVED</p>
+            <p className="text-slate-400 text-[10px] tracking-[0.3em] uppercase">© 2026 MRINAL RAJ ALL RIGHTS RESERVED</p>
           </div>
         </div>
       </footer>
