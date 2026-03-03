@@ -84,7 +84,7 @@ const Navbar = ({ version, theme, setTheme }: {
               <Mail className="text-slate-600 dark:text-slate-400 group-hover:text-primary" size={24} />
             </Link>
             <a 
-              href="https://mrinalrajl.github.io/Mrinal12324.github.io/resume/Lakkimsetty_Mrinal_Raj_Resume.pdf" 
+              href="https://mrinalrajl.github.io/Mrinal12324.github.io/resume/"
               target="_blank" 
               rel="noreferrer"
               className="group relative flex items-center justify-center p-2 rounded hover:bg-primary/10 transition-colors"
